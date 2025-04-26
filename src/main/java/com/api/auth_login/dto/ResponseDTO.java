@@ -1,4 +1,3 @@
 package com.api.auth_login.dto;
 
-public class ResponseDTO {
-}
+public record ResponseDTO (String name, String token) { }
