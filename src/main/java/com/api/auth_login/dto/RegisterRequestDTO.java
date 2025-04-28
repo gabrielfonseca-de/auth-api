@@ -1,4 +1,4 @@
 package com.api.auth_login.dto;
 
-public class RegisterRequestDTO {
+public record RegisterRequestDTO (String name, String email, String password) {
 }
