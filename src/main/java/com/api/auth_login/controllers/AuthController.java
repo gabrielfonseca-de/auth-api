@@ -25,11 +25,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
-    public AuthController(UserRepository repository, PasswordEncoder passwordEncoder, TokenService tokenService) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-        this.tokenService = tokenService;
-    }
+
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body){
@@ -58,4 +54,5 @@ public class AuthController {
         }
         return ResponseEntity.badRequest().build();
     }
+
 }
