@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: auth-login
+  datasource:
+    url: jdbc:postgresql://localhost:5432/login
+    username: postgres
+    password: toor
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+api:
+  security:
+    token:
+      secret: my-secret-key-from-video
+server:
+  port: 9091
