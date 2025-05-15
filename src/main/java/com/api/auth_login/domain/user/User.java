@@ -1,5 +1,8 @@
 package com.api.auth_login.domain.user;
 
+import com.api.auth_login.domain.enums.AccountStatus;
+import com.api.auth_login.domain.enums.AuthProvider;
+import com.api.auth_login.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +23,15 @@ public class User {
     private String name;
     private String email;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
 
     public String getId() {
         return id;
@@ -51,6 +63,30 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public AccountStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AccountStatus status) {
+        this.status = status;
+    }
+
+    public AuthProvider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(AuthProvider provider) {
+        this.provider = provider;
     }
 
 }

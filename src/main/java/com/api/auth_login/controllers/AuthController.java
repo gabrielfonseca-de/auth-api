@@ -7,8 +7,9 @@ import com.api.auth_login.domain.user.User;
 import com.api.auth_login.infra.security.TokenService;
 import com.api.auth_login.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class AuthController {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
@@ -38,6 +40,7 @@ public class AuthController {
 
 
     @PostMapping("/register")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body) {
         Optional<User> user = this.repository.findByEmail(body.email());
 
