@@ -38,7 +38,7 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO body) {
         Optional<User> user = this.repository.findByEmail(body.email());
 
