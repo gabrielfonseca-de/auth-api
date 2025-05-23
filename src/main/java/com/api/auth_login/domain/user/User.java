@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -26,7 +29,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
+    @Schema(description = "E-mail do usuário", example = "usuario@email.com")
+    @NotBlank
+    @Email
     private String email;
+    @NotBlank
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -37,14 +44,6 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private AuthProvider provider;
-
-    /*
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(role.getAuthority()));
-    }
-
-    */
 
     public String getId() {
         return id;
