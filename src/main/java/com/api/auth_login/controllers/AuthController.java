@@ -16,16 +16,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Tag(name = "Autenticação", description = "Endpoints de login e registro de usuários")
 public class AuthController {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
     @PostMapping("/login")
+    @Operation(summary = "Login de usuário", description = "Realiza autenticação e retorna um token JWT.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login bem-sucedido"),
+            @ApiResponse(responseCode = "401", description = "Senha incorreta"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
     public ResponseEntity<ResponseDTO> login(@RequestBody LoginRequestDTO body) {
         User user = repository.findByEmail(body.email())
                 .orElseThrow(() -> new CustomException("Usuário não encontrado", HttpStatus.NOT_FOUND));
@@ -39,6 +50,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
+    @Operation(summary = "Registro de novo usuário", description = "Cria um novo usuário e retorna um token JWT.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuário registrado com sucesso"),
+            @ApiResponse(responseCode = "409", description = "E-mail já cadastrado")
+    })
     public ResponseEntity<ResponseDTO> register(@RequestBody @Valid RegisterRequestDTO body) {
         if (repository.findByEmail(body.email()).isPresent()) {
             throw new CustomException("E-mail já cadastrado", HttpStatus.CONFLICT);
